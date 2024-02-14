@@ -1,7 +1,6 @@
 (define-module (dissoc gnu packages crypto)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages assembly)
-  #:use-module (gnu packages commencement)
   #:use-module (gnu packages gcc)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages pkg-config)
