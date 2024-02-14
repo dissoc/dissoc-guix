@@ -1,3 +1,5 @@
+;;; Copyright © 2024 Justin Bishop <mail@dissoc.me>
+
 (define-module (dissoc gnu packages chromium)
   #:use-module (gnu packages chromium)
   #:use-module (guix gexp)

@@ -1,3 +1,5 @@
+;;; Copyright © 2024 Justin Bishop <mail@dissoc.me>
+
 (define-module (dissoc gnu packages linux)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages compression)
