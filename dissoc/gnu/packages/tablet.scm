@@ -38,6 +38,6 @@ kernel, produced and maintained by the DIGImend project. We maintain this
 package to provide newer drivers for older kernel versions which don't have
 them, and to allow users to test new drivers before we contribute them to
 the mainline kernel.")
-   (license license:gpl2+)))
+   (license license:gpl2)))
 
 (define-public digimend-module (make-digimend linux-libre))
