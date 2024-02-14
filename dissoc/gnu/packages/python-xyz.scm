@@ -49,3 +49,37 @@ statement.")
     "Provides a publish-subscribe API to facilitate event-based or message-based
 architecture in a single-process application.")
    (license license:bsd-2)))
+
+(define-public pygatt
+  (package
+   (name "pygatt")
+   (version "4.0.5")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+           (url "https://github.com/peplin/pygatt.git")
+           (commit (string-append "v" version))))
+     (sha256
+      (base32 "1zdfxidiw0l8n498sy0l33n90lz49n25x889cx6jamjr7frlcihd"))))
+   (build-system python-build-system)
+   (arguments `(#:tests? #f
+                #:phases
+                (modify-phases
+                 %standard-phases
+                 (add-before 'build 'patch-setup-py
+                             (lambda _
+                               (substitute* "setup.py"
+                                            ;; no longer need enum-compat
+                                            ;; compatible module is  included with python 3.8.2
+                                            (("'enum-compat'") "#'enum-compat'")))))))
+   (inputs
+    `(("python-nose" ,python-nose)
+      ("python-coverage" ,python-coverage)))
+   (home-page "https://github.com/peplin/pygatt")
+   (synopsis "Python wrapper for gatttool")
+   (description
+    "The module allows reading and writing to GATT descriptors on devices such
+as fitness trackers, sensors, and anything implementing standard GATT Descriptor
+behavior.")
+   (license license:asl2.0)))
