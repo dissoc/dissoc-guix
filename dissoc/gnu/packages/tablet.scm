@@ -27,8 +27,8 @@
               "0dl0662839j1dav816m2qv8w2brdixr5l0lpqbshky57ranzvrkw"))))
    (build-system linux-module-build-system)
    (arguments
-    `(#:tests? #f
-      #:linux kernel))
+    (list #:tests? #f
+          #:linux kernel))
    (home-page "https://digimend.github.io/")
    (synopsis
     "DIGImend graphics tablet drivers for the Linux kernel")
@@ -40,4 +40,4 @@ them, and to allow users to test new drivers before we contribute them to
 the mainline kernel.")
    (license license:gpl2)))
 
-(define-public digimend-module (make-digimend linux-libre))
+(define-public digimend-module-libre (make-digimend linux-libre))
