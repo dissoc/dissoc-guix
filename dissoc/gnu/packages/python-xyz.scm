@@ -3,6 +3,7 @@
 (define-module (dissoc gnu packages python-xzy)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages base)
+  #:use-module (gnu packages check)
   #:use-module (guix build utils)
   #:use-module (guix build-system python)
   #:use-module (guix git-download)
@@ -83,3 +84,26 @@ architecture in a single-process application.")
 as fitness trackers, sensors, and anything implementing standard GATT Descriptor
 behavior.")
    (license license:asl2.0)))
+
+(define-public gatt-python
+  (package
+   (name "gatt-python")
+   (version "0.2.6")
+   (source
+    (origin
+     (method git-fetch)
+     (uri (git-reference
+           (url "https://github.com/getsenic/gatt-python.git")
+           (commit version)))
+     (sha256
+      (base32 "140790w0z0inxcpyhy5h6n4s30s2lbi0gjdnhlyswhr3v91ymhhq"))))
+   (build-system python-build-system)
+   (arguments `(#:tests? #f)) ; fails to import test modules
+   (native-inputs
+    `(("python-dbus" ,python-dbus)))
+   (home-page "https://github.com/getsenic/gatt-python")
+   (synopsis "Bluetooth GATT SDK for Python")
+   (description
+    "The Bluetooth GATT SDK for Python helps you implementing and communicating
+with any Bluetooth Low Energy device that has a GATT profile.")
+   (license license:expat)))
