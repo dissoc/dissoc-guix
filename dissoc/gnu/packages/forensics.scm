@@ -1,4 +1,4 @@
-(define-module (dissoc packages forensics)
+(define-module (dissoc gnu packages forensics)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages autotools)
   #:use-module (guix build-system gnu)
