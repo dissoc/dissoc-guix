@@ -12,7 +12,7 @@
 ;; to create package. The provided digimend package
 ;; will use linux-libre as the kernel.
 
-(define (make-digimend kernel)
+(define-public (make-digimend kernel)
   (package
    (name "digimend-module")
    (version "master")
@@ -40,4 +40,4 @@ them, and to allow users to test new drivers before we contribute them to
 the mainline kernel.")
    (license license:gpl2)))
 
-(define-public digimend-module-libre (make-digimend linux-libre))
+(define-public digimend-module-linux-libre (make-digimend linux-libre))
