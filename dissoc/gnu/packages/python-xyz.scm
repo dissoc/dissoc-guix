@@ -1,6 +1,6 @@
 ;;; Copyright © 2024 Justin Bishop <mail@dissoc.me>
 
-(define-module (dissoc gnu packages python-xzy)
+(define-module (dissoc gnu packages python-xyz)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages base)
   #:use-module (gnu packages check)
