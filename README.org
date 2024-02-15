@@ -2,7 +2,7 @@
 #+SUBTITLE:  packages and services for guix
 #+AUTHOR:    Justin Bishop
 #+DESCRIPTION: contains packages and services to be used as a channel with guix
-#+KEYWORDS:  org-mode, syntax, quick reference, cheat sheet, recommended practices, latex, beamer, html
+#+KEYWORDS:  guix, packages, services, free
 #+LANGUAGE:  en
 
 * Summary
@@ -14,7 +14,13 @@ If the file does not exist it may need to be created.
 #+begin_src scheme :eval no
 (append %default-channels
         (list (channel
-               (name 'guix-dissoc-repo)
-               (url "https://github.com/dissoc/dissoc-guix.git"))
+               (name 'dissoc-guix)
+               (url "https://github.com/dissoc/dissoc-guix.git")
+               (branch "main")
+               (introduction
+                (make-channel-introduction
+                 "d644d7247155056b1d62977ae2cf8f989f84c11a"
+                 (openpgp-fingerprint
+                  "95D3 7A96 EC54 79CE 6082  5831 81FF 5EC7 66ED 8C39"))))
               ...))
 #+end_src
