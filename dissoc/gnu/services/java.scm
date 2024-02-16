@@ -3,6 +3,7 @@
 (define-module (dissoc gnu services java)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
+  #:use-module (gnu system shadow)
   #:use-module (guix gexp)
   #:use-module (guix records))
 
