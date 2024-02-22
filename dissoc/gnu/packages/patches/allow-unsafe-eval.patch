@@ -1,0 +1,66 @@
+From 36a4180bd37e851686b95ac4aac5bfe22036ce49 Mon Sep 17 00:00:00 2001
+From: root <root@chromium.lxd>
+Date: Tue, 19 Sep 2023 02:53:45 +0000
+Subject: [PATCH] Hacks to allow unsafe-eval in mv3 chrome extensions
+
+---
+ chrome/browser/ash/system_web_apps/apps/terminal_source.cc | 2 +-
+ extensions/common/csp_validator.cc                         | 2 +-
+ extensions/common/manifest_handlers/csp_info.cc            | 6 +++---
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/chrome/browser/ash/system_web_apps/apps/terminal_source.cc b/chrome/browser/ash/system_web_apps/apps/terminal_source.cc
+index ea31108c25..938672aec4 100644
+--- a/chrome/browser/ash/web_applications/terminal_source.cc
++++ b/chrome/browser/ash/web_applications/terminal_source.cc
+@@ -241,7 +241,7 @@ std::string TerminalSource::GetContentSecurityPolicy(
+       case network::mojom::CSPDirectiveName::ObjectSrc:
+         return "object-src 'self';";
+       case network::mojom::CSPDirectiveName::ScriptSrc:
+-        return "script-src 'self' 'wasm-unsafe-eval';";
++        return "script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval';";
+       case network::mojom::CSPDirectiveName::WorkerSrc:
+         return "worker-src 'self';";
+       default:
+diff --git a/extensions/common/csp_validator.cc b/extensions/common/csp_validator.cc
+index 07a0e467c5..5206e8c954 100644
+--- a/extensions/common/csp_validator.cc
++++ b/extensions/common/csp_validator.cc
+@@ -719,7 +719,7 @@ bool DoesCSPDisallowRemoteCode(const std::string& content_security_policy,
+ 
+           return source_lower == kSelfSource || source_lower == kNoneSource ||
+                  IsLocalHostSource(source_lower) ||
+-                 source_lower == kWasmUnsafeEvalSource;
++                 source_lower == kWasmUnsafeEvalSource || source_lower == "'unsafe-eval'";
+         });
+ 
+     if (it == directive_values.end())
+diff --git a/extensions/common/manifest_handlers/csp_info.cc b/extensions/common/manifest_handlers/csp_info.cc
+index 1fcbea13b4..2533766748 100644
+--- a/extensions/common/manifest_handlers/csp_info.cc
++++ b/extensions/common/manifest_handlers/csp_info.cc
+@@ -43,11 +43,11 @@ static const char kDefaultMV3CSP[] = "script-src 'self';";
+ 
+ // The minimum CSP to be used in order to prevent remote scripts.
+ static const char kMinimumMV3CSP[] =
+-    "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';";
++    "script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval'; object-src 'self';";
+ // For unpacked extensions, we additionally allow the use of localhost files to
+ // aid in rapid local development.
+ static const char kMinimumUnpackedMV3CSP[] =
+-    "script-src 'self' 'wasm-unsafe-eval' http://localhost:* "
++    "script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval' http://localhost:* "
+     "http://127.0.0.1:*; object-src 'self';";
+ 
+ #define PLATFORM_APP_LOCAL_CSP_SOURCES "'self' blob: filesystem: data:"
+@@ -82,7 +82,7 @@ int GetValidatorOptions(Extension* extension) {
+       extension->GetType() == Manifest::TYPE_LEGACY_PACKAGED_APP) {
+     options |= csp_validator::OPTIONS_ALLOW_UNSAFE_EVAL;
+   }
+-
++  options |= csp_validator::OPTIONS_ALLOW_UNSAFE_EVAL;
+   // Component extensions can specify an insecure object-src directive. This
+   // should be safe because non-NPAPI plugins should load in a sandboxed process
+   // and only allow communication via postMessage.
+-- 
+2.39.2
