@@ -1,6 +1,8 @@
 ;;; Copyright © 2024 Justin Bishop <mail@dissoc.me>
 
 (define-module (dissoc gnu services java)
+  #:use-module (gnu packages admin)
+  #:use-module (gnu services configuration)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (gnu system shadow)
