@@ -5,7 +5,9 @@
   #:use-module (gnu services)
   #:use-module (gnu system shadow)
   #:use-module (guix gexp)
-  #:use-module (guix records))
+  #:use-module (guix records)
+  #:export (jar-service-type
+            jar-configuration))
 
 (define-record-type* <jar-configuration>
   jar-configuration make-jar-configuration
